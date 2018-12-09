@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  runner:
+    image: b6pzeusbc54tvhw5jgpyw8pwz2x6gs/gitlab-runner-with-ecr-login:11.5.1
+    restart: unless-stopped
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./gitlab-runner:/etc/gitlab-runner
