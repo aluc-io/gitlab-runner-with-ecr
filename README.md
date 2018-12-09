@@ -17,6 +17,7 @@ $ docker-compose up -d
 ```
 
 ## runner 등록
+
 ```sh
 $ docker-compose exec runner gitlab-runner register
 Runtime platform                                    arch=amd64 os=linux pid=40 revision=7f00c780 version=11.5.1
