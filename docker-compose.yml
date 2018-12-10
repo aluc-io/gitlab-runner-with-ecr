@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   runner:
-    image: aluc-io/gitlab-runner-with-ecr:11.5.1-2
+    image: alucio/gitlab-runner-with-ecr:11.5.1-2
     restart: unless-stopped
     environment:
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
