@@ -52,14 +52,14 @@ Text 에디터로 `gitlab-runner/config.toml` 설정 파일을 열어 `[[runners
    [runners.docker]
 ```
 
-또는 아래와 같이 특정 registry 에 한정하여 설정 할 수 있음
+주의! [이 코멘트 내용][gitlab_comment]에 따르면 아래와 같은 credHelpers 설정은 아직(?) 지원 안함.
 
 ```diff
  [[runners]]
    url = "https://gitlab.com/"
    executor = "docker"
 +  environment = [
-+    'DOCKER_AUTH_CONFIG={"credHelpers":{"530000000092.dkr.ecr.ap-northeast-2.amazonaws.com":"ecr-login"}',
++    'DOCKER_AUTH_CONFIG={"credHelpers":{"530000000092.dkr.ecr.ap-northeast-2.amazonaws.com":"ecr-login"}}',
 +  ]
    [runners.docker]
 ```
@@ -78,3 +78,4 @@ $ docker-compose exec -T runner /bin/sh -c "echo 530000000092.dkr.ecr.ap-northea
 - https://hub.docker.com/r/dolbylabs/amazon-ecr-credential-helper/
 
 [amazon_ecr_credential_helper]: https://github.com/awslabs/amazon-ecr-credential-helper
+[gitlab_comment]: https://gitlab.com/gitlab-org/gitlab-runner/issues/1583#note_93170156
