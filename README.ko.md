@@ -2,11 +2,11 @@
 ![Docker Automated](https://img.shields.io/docker/automated/alucio/gitlab-runner-with-ecr.svg)
 ![Docker Build](https://img.shields.io/docker/build/alucio/gitlab-runner-with-ecr.svg)
 
-gitlab runner with [amazone-ecr-credential-helper][amazon_ecr_credential_helper]
+[amazone-ecr-credential-helper][amazon_ecr_credential_helper] 를 사용하는 gitlab-runner.
 
-## 1. Set environment variables
-AWS credential is required to use docker-credential-ecr-login. Below
-environment variables are referenced in the `docker-compose.yml` file.
+## 1. environment 셋팅
+docker-credential-ecr-login 을 사용하기위해 AWS credential 이 필요.
+`docker-compose.yml` 에서 아래 environment 를 필요로 함.
 
 ```sh
 export AWS_ACCESS_KEY_ID=AKOOOOOOOOOOOOOOOOWA
@@ -14,13 +14,13 @@ export AWS_SECRET_ACCESS_KEY=exjxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx5/Y
 export AWS_DEFAULT_REGION=ap-northeast-2
 ```
 
-## 2. Run gitlab-runner
+## 2. gitlab-runner 실행
 
 ```sh
 $ docker-compose up -d
 ```
 
-## 3. Register runner
+## 3. runner 등록
 
 ```sh
 $ docker-compose exec runner gitlab-runner register --env 'DOCKER_AUTH_CONFIG={"credsStore":"ecr-login"}'
@@ -34,7 +34,7 @@ o6xxxxxxxxxxxxxxxxLt
 Please enter the gitlab-ci description for this runner:
 [65xxxxxxxx1e]: my-runner-for-using-ecr
 Please enter the gitlab-ci tags for this runner (comma separated):
-withecr
+
 Registering runner... succeeded                     runner=o6xxxxxx
 Please enter the executor: docker-ssh, shell, virtualbox, docker+machine, docker-ssh+machine, kubernetes, docker, ssh, parallels:
 docker
@@ -43,7 +43,7 @@ ubuntu:16.04
 Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
 ```
 
-This register command creates below `gitlab-runner/config.toml`:
+참고로 이 register 명령은 아래와 같은 `gitlab-runner/config.toml` 을 생성:
 ```toml
 [[runners]]
   name = "my-runner-for-using-ecr"
@@ -66,20 +66,19 @@ This register command creates below `gitlab-runner/config.toml`:
 ```
 
 ## 4. docker-credential-ecr-login get
-For the first time, create `AuthorizationToken` through`
-docker-credential-ecr-login get` command. The generated token is stored in
-`.ecr/cache.json`.
+최초 1회 `docker-credential-ecr-login get` 명령어를 통해 `AuthorizationToken` 을 생성.
+생성된 토큰은 `/root/.ecr/cache.json` 에 저장됨.
 
 ```sh
 $ docker-compose exec -T runner /bin/sh -c "echo 530000000092.dkr.ecr.ap-northeast-2.amazonaws.com | docker-credential-ecr-login get"
 {"ServerURL":"530000000092.dkr.ecr.ap-northeast-2.amazonaws.com","Username":"AWS","Secret":"eynR5cGUiOiJEQVRBX0tFWSI......sImV4cGlyYXRpb24iOjE1NDQzODMzMzV9"}
 ```
 
-## 5. Example of `gitlab-ci.yml`
+## 5. `gitlab-ci.yml` 예제
 
 ```yml
 # .gitlab-ci.yml
-# now you can use a docker image that belongs to your ECR
+# 이제 ECR 로 관리되는 docker image 를 사용 할 수 있습니다
 image: 539425821792.dkr.ecr.ap-northeast-2.amazonaws.com/for-build
 
 build:
@@ -87,7 +86,7 @@ build:
     - yarn && yarn build
 ```
 
-## References
+## references
 - https://github.com/awslabs/amazon-ecr-credential-helper
 - https://hub.docker.com/r/pottava/amazon-ecr-credential-helper/
 - https://hub.docker.com/r/dolbylabs/amazon-ecr-credential-helper/
