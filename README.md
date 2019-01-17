@@ -80,7 +80,7 @@ $ docker-compose exec -T runner /bin/sh -c "echo 530000000092.dkr.ecr.ap-northea
 ```yml
 # .gitlab-ci.yml
 # now you can use a docker image that belongs to your ECR
-image: 539425821792.dkr.ecr.ap-northeast-2.amazonaws.com/for-build
+image: 530000000092.dkr.ecr.ap-northeast-2.amazonaws.com/for-build
 
 build:
   script:
