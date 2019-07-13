@@ -1,6 +1,6 @@
-FROM gitlab/gitlab-runner:alpine-v11.5.1
+FROM gitlab/gitlab-runner:alpine-v12.0.2
 
-ENV APP_VERSION=v0.2.0
+ENV APP_VERSION=v0.3.1
 
 RUN apk add --no-cache ca-certificates
 RUN apk --no-cache add --virtual build-dependencies gcc g++ musl-dev go \
